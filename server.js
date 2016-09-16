@@ -1,39 +1,59 @@
-// server.js
-// where your node app starts
+//// server.js
+//// where your node app starts
+//
+//// init project
+//var express = require('express');
+//var app = express();
+//
+//
+//app.use(express.static('www'));
+//
+//// listen for requests :)
+//var listener = app.listen(process.env.NODE_PORT || 3000, function () {
+//    console.log('Your app is listening on port ' + listener.address().port);
+//});
 
-// init project
+
+var env = process.env.NODE_ENV || 'development';
 var express = require('express');
-var app = express();
+var packageJson = require('./package.json');
+var logger = require('./logging.js');
 
-// we've started you off with Express, 
-// but feel free to use whatever libs or frameworks you'd like through `package.json`.
+logger.log('info', 'Loading Pixel Pets in %s mode', env);
 
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
+global.App = {
+    app: express(),
+    config: require('./config')[env],
+    port: process.env.PORT || 3000,
+    root: __dirname,
+    env: env,
+    version: packageJson.version,
+    logger: logger,
+    require: function (path) {
+        return require(this.appPath(path))
+    },
+    appPath: function (path) {
+        return this.root + "/" + path
+    },
+    start: function () {
+        if (!this.started) {
+            this.started = true;
+            this.app.listen(this.port);
+            this.logger.log('info', 'Running version %s on port %s', this.version, this.port);
 
-// http://expressjs.com/en/starter/basic-routing.html
-app.get("/", function (request, response) {
-    response.sendFile(__dirname + '/views/index.html');
-});
+        }
+    },
+    shutdown: function () {
+        this.logger.log('info', 'Manually shutting down');
+    }
 
-app.get("/dreams", function (request, response) {
-    response.send(dreams);
-});
+};
 
-// could also use the POST body instead of query string: http://expressjs.com/en/api.html#req.body
-app.post("/dreams", function (request, response) {
-    dreams.push(request.query.dream);
-    response.sendStatus(200);
-});
+if (!App.config) {
+    App.logger.log('error', 'No config specified for %s environment', App.env);
+};
 
-// Simple in-memory store for now
-var dreams = [
-  "Find and count some sheep",
-  "Climb a really tall mountain",
-  "Wash the dishes"
-  ];
+App.app.use(express.static('www'));
+App.require('./routes.js')(App.app);
 
-// listen for requests :)
-var listener = app.listen(process.env.NODE_PORT, function () {
-    console.log('Your app is listening on port ' + listener.address().port);
-});
+App.start();

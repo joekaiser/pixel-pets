@@ -65,7 +65,7 @@ gulp.task('optimizeImages', function (cb) {
 
 gulp.task('clean-dist', function (cb) {
 
-    return del(['./public/dist/site-*']);
+    return del(['./site/dist/site-*']);
 
 });
 

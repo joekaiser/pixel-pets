@@ -10,7 +10,8 @@
     "start": "bash start.sh"
   },
   "dependencies": {
-    "express": "^5.0.0-alpha.2"
+    "express": "^5.0.0-alpha.2",
+    "winston": "^2.2.0"
   },
   "devDependencies": {
     "del": "^2.2.2",
