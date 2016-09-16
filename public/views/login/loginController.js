@@ -11,7 +11,7 @@ angular.module('pixelPets').controller('loginController',
     var fakeUser = AuthService.login();
     $scope.setCurrentUser(fakeUser);
     $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-    $state.transitionTo('app');
+    $state.transitionTo('app.house');
   };
   
 }]);

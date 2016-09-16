@@ -20,19 +20,58 @@ function($stateProvider, $urlRouterProvider, USER_ROLES) {
   
   $urlRouterProvider.otherwise('/');
 
-  $stateProvider.state('main',{
+  $stateProvider
+  
+  .state('main',{
     url: '/',
     templateUrl:'/views/login/login.html',
     controller:'loginController'
-  });
-  
-  $stateProvider.state('app',{
+  })
+  .state('app',{
     url: '/app',
-    template:'<p>welcome</p>',
+    abstract:true,
+    templateUrl:'/views/app/app.html',
     data:{
       authorizedRole:USER_ROLES.all
     }
-  });
+  })
+  .state('app.house',{
+    url: '',
+    template:'house',
+    data:{
+      authorizedRole:USER_ROLES.all
+    }
+  })
+  .state('app.garden',{
+    url: '/garden',
+    template:'garden',
+    data:{
+      authorizedRole:USER_ROLES.all
+    }
+  })
+  .state('app.store',{
+    url: '/store',
+    template:'store',
+    data:{
+      authorizedRole:USER_ROLES.all
+    }
+  })
+  .state('app.playground',{
+    url: '/playground',
+    template:'playground',
+    data:{
+      authorizedRole:USER_ROLES.all
+    }
+  })
+  .state('app.school',{
+    url: '/school',
+    template:'school',
+    data:{
+      authorizedRole:USER_ROLES.all
+    }
+  })
+  
+  ;
 
 }]);
 
