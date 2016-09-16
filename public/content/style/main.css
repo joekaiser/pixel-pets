@@ -1,0 +1,92 @@
+/*
+primary:#9b4dca (old #724882)
+success:#88A825
+warning:#CF4A30
+error:#911146
+highlight:#ED8C2B
+default:#eee
+hover:#606c76
+*/
+
+body{
+  background-color:#f2f5f7;
+
+}
+
+.container{
+  margin:auto;
+  max-width:1128px;
+}
+
+.box{
+  background-color:#fff;
+  border:1px solid #d3e0e9;
+  border-radius:4px;
+  box-shadow:0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.navbar{
+  background-color:#724882;
+  height:80px;
+  color:#eee;
+  padding:10px;
+  margin-bottom:10px;
+}
+
+.navbar .brand{
+  color:#fff;
+  font-size:2.5rem;
+  display:inline-block;
+  
+}
+
+.navbar a, .navbar a:visited{
+  color:#ED8C2B;
+}
+.navbar a:hover{
+  color:#eee;
+}
+
+a{
+  cursor:pointer;
+}
+
+img{
+  max-width:100%;
+  height:auto;
+}
+
+input[type='text'],
+input[type='password']{
+  background-color:#fff;
+}
+
+nav{
+
+}
+
+nav a{
+  display:block;
+  padding:8px 0 8px 16px;
+  font-size:1.5rem;
+}
+
+nav a.active{
+  background-color:#606c76;
+  color:#fff;
+}
+
+
+@media(max-width: 40rem){
+  /* mobile only */
+  .hidden-mobile{
+    display:none!important;
+  }
+}
+
+ @media(max-width: 60rem){
+  //tablet (or smaller)
+  .hidden-tablet{
+    display:none!important;
+  }
+} 
