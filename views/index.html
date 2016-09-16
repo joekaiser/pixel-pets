@@ -1,43 +1,39 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Pixel Pets</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
-    <link rel="stylesheet" href="/content/style/milligram.min.css">
-    <link rel="stylesheet" href="/content/style/main.css">
-    <link rel="stylesheet" href="/content/style/login.css">
-    <link rel="stylesheet" href="/content/style/home.css">
-    
+    <link rel="stylesheet" href="/dist/milligram.min.css">
+    <link rel="stylesheet" href="/dist/style.css">
+
+
 </head>
 
 <body ng-app="pixelPets" ng-controller="ApplicationController">
-      <div class="navbar">
-      <div class="container">
-        <span class="brand">Pixel Pets</span>
-        <div ng-if="currentUser" class="pull-right">Welcome, {{currentUser.name}}
-        <a ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+    <div class="navbar">
+        <div class="container">
+            <span class="brand">Pixel Pets</span>
+            <div ng-if="currentUser" class="pull-right">Welcome, {{currentUser.name}}
+                <a ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+            </div>
         </div>
-      </div>
     </div>
-    
+
     <div class="container">
-      <ui-view></ui-view>
+        <ui-view></ui-view>
     </div>
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="https://npmcdn.com/angular-ui-router@1.0.0-beta.2/release/angular-ui-router.min.js"></script>
     <script src="https://use.fontawesome.com/d49caf12d2.js"></script>
-    
-    <script src="/app.js"></script>
-    <script src="/scripts/AuthService.js"></script>
-    <script src="/scripts/Session.js"></script>
-    <script src="/scripts/AuthInterceptor.js"></script>
-    <script src="/views/login/loginController.js"></script>
-    <script src="/views/nav/nav.js"></script>
-    
+
+    <script src="/dist/site.js"></script>
+
 </body>
+
 </html>
