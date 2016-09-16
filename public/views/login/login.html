@@ -1,21 +1,21 @@
 <section id="section-loginPage" class="box">
-  
-  <div class="row">
-    <div class="column column-67 hidden-mobile">
-      <img src="https://cdn.hyperdev.com/us-east-1%3A85b909a7-66f0-4aab-bd85-07d3bd6ac59a%2Fbunny.png">
+
+    <div class="row">
+        <div class="column column-67 hidden-mobile">
+            <img src="/assets/bunny.png">
+        </div>
+
+        <div class="column">
+            <form>
+                <fieldset>
+                    <label for="nameField"><i class="fa fa-sign-in"></i>&nbsp;Username</label>
+                    <input type="text" placeholder="player1" id="nameField">
+                    <label for="passwordField"><i class="fa fa-key"></i>&nbsp;Password</label>
+                    <input type="text" placeholder="********" id="passwordField">
+                    <button ng-click="signin()" class="button pull-right" type="submit">Login</button>
+                </fieldset>
+            </form>
+        </div>
     </div>
-    
-    <div class="column">
-      <form>
-        <fieldset>
-          <label for="nameField"><i class="fa fa-sign-in"></i>&nbsp;Username</label>
-          <input type="text" placeholder="player1" id="nameField">
-          <label for="passwordField"><i class="fa fa-key"></i>&nbsp;Password</label>
-          <input type="text" placeholder="********" id="passwordField">
-          <button ng-click="signin()" class="button pull-right" type="submit">Login</button>
-        </fieldset>
-      </form>
-    </div>
-  </div>
-  
- </section>
+
+</section>
