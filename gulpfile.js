@@ -8,42 +8,44 @@ var concat = require('gulp-concat');
 var pump = require('pump');
 var cleanCSS = require('gulp-clean-css');
 var image = require('gulp-image');
+var autoprefixer = require('gulp-autoprefixer');
+var CacheBuster = require('gulp-cachebust');
+var del = require('del');
 
-var defaultTasks = ['sass', 'uglify']
+var cachebust = new CacheBuster({
+    random: false,
+    checksumLength: 10
+});
 
-gulp.task('default', defaultTasks, function () {});
+gulp.task('default', ['build-css', 'build-js', 'build-html'], function () {});
 
-//gulp.task('sass', function () {
-//    
-//    
-//   return gulp.src('./public/content/sass/*.scss')
-//     .pipe(sourcemaps.init())
-//     .pipe(sass().on('error', sass.logError))
-//     .pipe(sourcemaps.write())
-//     .pipe(gulp.dest('./public/dist/'));
-//});
-
-gulp.task('sass', function (cb) {
+gulp.task('build-css', ['clean-dist'], function (cb) {
     pump([
         gulp.src('./public/style/*.scss'),
         sourcemaps.init(),
         sass(),
-        concat('style.css'),
+        autoprefixer({
+                browsers: ['last 2 versions'],
+                cascade: false
+            }),
+        concat('site-style.css'),
         cleanCSS(),
-        sourcemaps.write(),
+        //cachebust.resources(),
+        sourcemaps.write('./'),
         gulp.dest('./public/dist')
     ],
         cb
     );
 });
 
-gulp.task('uglify', function (cb) {
+gulp.task('build-js', ['clean-dist'], function (cb) {
     pump([
-        gulp.src('./public/**/*.js'),
+        gulp.src(['./public/app.js', './public/**/*.js']),
         sourcemaps.init(),
-        concat('site.js'),
-        sourcemaps.write(),
+        concat('site-scripts.js'),
         uglify(),
+        //cachebust.resources(),
+        sourcemaps.write('./'),
 
         gulp.dest('./public/dist')
     ],
@@ -59,4 +61,26 @@ gulp.task('optimizeImages', function (cb) {
     ],
         cb
     );
+});
+
+gulp.task('clean-dist', function (cb) {
+
+    return del(['./public/dist/site-*']);
+
+});
+
+
+
+gulp.task('build-html', ['clean-dist', 'build-css', 'build-js'], function (cb) {
+    /*disabling this task because it doesn't seem to like reading/writing to the same file.
+    it works the first time, but any other run wont pick up the reference
+    becuase the tag would read <script src="/dist/site-scripts-1234567890.js"></script> */
+
+    //    pump([
+    //        gulp.src('./views/*.html'),
+    //        cachebust.references(),
+    //        gulp.dest('./views')
+    //    ],
+    //        cb
+    //    );
 });

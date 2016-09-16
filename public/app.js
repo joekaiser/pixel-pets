@@ -1,20 +1,20 @@
-var app = angular.module('pixelPets', ['ui.router']);
+angular.module('pixelPets', ['ui.router'])
 
-app.constant('AUTH_EVENTS', {
+.constant('AUTH_EVENTS', {
     loginSuccess: 'auth-login-success',
     loginFailed: 'auth-login-failed',
     logoutSuccess: 'auth-logout-success',
     sessionTimeout: 'auth-session-timeout',
     notAuthenticated: 'auth-not-authenticated',
     notAuthorized: 'auth-not-authorized'
-});
+})
 
-app.constant('USER_ROLES', {
+.constant('USER_ROLES', {
     all: '*',
     admin: 'admin'
-});
+})
 
-app.config(['$stateProvider', '$urlRouterProvider', 'USER_ROLES',
+.config(['$stateProvider', '$urlRouterProvider', 'USER_ROLES',
 function ($stateProvider, $urlRouterProvider, USER_ROLES) {
 
         $urlRouterProvider.otherwise('/');
@@ -72,9 +72,9 @@ function ($stateProvider, $urlRouterProvider, USER_ROLES) {
 
 
 
-}]);
+}])
 
-app.run(['$log', '$rootScope', '$transitions', 'AUTH_EVENTS', 'AuthService',
+.run(['$log', '$rootScope', '$transitions', 'AUTH_EVENTS', 'AuthService',
 function ($log, $rootScope, $transitions, AUTH_EVENTS, AuthService) {
 
         $transitions.onBefore({
@@ -100,9 +100,9 @@ function ($log, $rootScope, $transitions, AUTH_EVENTS, AuthService) {
             }
         );
 
-}]);
+}])
 
-app.controller('ApplicationController', ['$log', '$rootScope', '$scope', '$state', 'USER_ROLES', 'AUTH_EVENTS', 'AuthService',
+.controller('ApplicationController', ['$log', '$rootScope', '$scope', '$state', 'USER_ROLES', 'AUTH_EVENTS', 'AuthService',
   function ($log, $rootScope, $scope, $state, USER_ROLES, AUTH_EVENTS, AuthService) {
         $scope.currentUser = null;
         $scope.userRoles = USER_ROLES;
