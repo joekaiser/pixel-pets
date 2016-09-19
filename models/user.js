@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var moment = require('moment');
 
-var auth = App.require('controllers/auth.js');
+var auth = App.require('modules/auth.js');
 
 // Define our user schema
 var UserSchema = new mongoose.Schema({

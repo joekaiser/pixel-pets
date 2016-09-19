@@ -1,4 +1,4 @@
-var AuthController = App.require('controllers/auth.js')
+var AuthController = App.require('modules/auth.js')
 module.exports = function (app) {
     var HeartBeatController = App.require('controllers/heartbeatController.js');
     var UserController = App.require('controllers/userController.js');
