@@ -1,5 +1,7 @@
+var AuthController = App.require('controllers/auth.js')
 module.exports = function (app) {
     var HeartBeatController = App.require('controllers/heartbeatController.js');
+    var UserController = App.require('controllers/userController.js');
 
     app.get("/", function (request, response) {
         response.sendFile(__dirname + '/www/index.html');
@@ -7,6 +9,9 @@ module.exports = function (app) {
 
 
 
-    app.get('/heartbeat', HeartBeatController.ping);
+    app.get('/heartbeat', AuthController.isAuthenticated, HeartBeatController.ping);
+    app.get('/login', UserController.getUser);
+    app.post('/register', UserController.register);
+
 
 };

@@ -1,10 +1,10 @@
 var configBase = {
     root: require('path').normalize(__dirname + '/..'),
-    app: {
-        name: "PixelPets"
-    },
+    name: "PixelPets",
+    secret: 'chatter-tooth',
+    logLevel: 'verbose',
     db: {
-        // include DB connection stuff here
+        connection: "mongodb://127.0.0.1:27017/pixelpets"
     }
 }
 

@@ -1,23 +1,10 @@
-//// server.js
-//// where your node app starts
-//
-//// init project
-//var express = require('express');
-//var app = express();
-//
-//
-//app.use(express.static('www'));
-//
-//// listen for requests :)
-//var listener = app.listen(process.env.NODE_PORT || 3000, function () {
-//    console.log('Your app is listening on port ' + listener.address().port);
-//});
-
-
 var env = process.env.NODE_ENV || 'development';
 var express = require('express');
 var packageJson = require('./package.json');
 var logger = require('./logging.js');
+var passport = require('passport');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 logger.log('info', 'Loading Pixel Pets in %s mode', env);
 
@@ -53,7 +40,11 @@ if (!App.config) {
     App.logger.log('error', 'No config specified for %s environment', App.env);
 };
 
+App.logger.transports.console.level = App.config.logLevel;
 App.app.use(express.static('www'));
-App.require('./routes.js')(App.app);
+App.app.use(bodyParser.json());
+App.app.use(passport.initialize());
 
+App.require('./routes.js')(App.app);
+mongoose.connect(App.config.db.connection);
 App.start();

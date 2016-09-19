@@ -21,7 +21,7 @@ gulp.task('default', ['build-css', 'build-js', 'build-html'], function () {});
 
 gulp.task('build-css', ['clean-dist'], function (cb) {
     pump([
-        gulp.src('./public/style/*.scss'),
+        gulp.src('./www/style/*.scss'),
         sourcemaps.init(),
         sass(),
         autoprefixer({
@@ -32,7 +32,7 @@ gulp.task('build-css', ['clean-dist'], function (cb) {
         cleanCSS(),
         //cachebust.resources(),
         sourcemaps.write('./'),
-        gulp.dest('./public/dist')
+        gulp.dest('./www/dist')
     ],
         cb
     );
@@ -40,14 +40,14 @@ gulp.task('build-css', ['clean-dist'], function (cb) {
 
 gulp.task('build-js', ['clean-dist'], function (cb) {
     pump([
-        gulp.src(['./public/app.js', './public/**/*.js']),
+        gulp.src(['./www/app.js', './www/**/*.js']),
         sourcemaps.init(),
         concat('site-scripts.js'),
         uglify(),
         //cachebust.resources(),
         sourcemaps.write('./'),
 
-        gulp.dest('./public/dist')
+        gulp.dest('./www/dist')
     ],
         cb
     );
@@ -55,9 +55,9 @@ gulp.task('build-js', ['clean-dist'], function (cb) {
 
 gulp.task('optimizeImages', function (cb) {
     pump([
-        gulp.src('./public/assets/*'),
+        gulp.src('./www/assets/*'),
         image(),
-        gulp.dest('./public/assets')
+        gulp.dest('./www/assets')
     ],
         cb
     );
@@ -65,7 +65,7 @@ gulp.task('optimizeImages', function (cb) {
 
 gulp.task('clean-dist', function (cb) {
 
-    return del(['./site/dist/site-*']);
+    return del(['./www/dist/site-*']);
 
 });
 
