@@ -17,10 +17,10 @@ global.App = {
     version: packageJson.version,
     logger: logger,
     require: function (path) {
-        return require(this.appPath(path))
+        return require(this.appPath(path));
     },
     appPath: function (path) {
-        return this.root + "/" + path
+        return this.root + "/" + path;
     },
     start: function () {
         if (!this.started) {
@@ -38,12 +38,13 @@ global.App = {
 
 if (!App.config) {
     App.logger.log('error', 'No config specified for %s environment', App.env);
-};
+}
 
 App.logger.transports.console.level = App.config.logLevel;
 App.app.use(express.static('www'));
 App.app.use(bodyParser.json());
 App.app.use(passport.initialize());
+
 
 App.require('./routes.js')(App.app);
 mongoose.connect(App.config.db.connection);

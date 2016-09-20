@@ -10,8 +10,20 @@ module.exports = function (app) {
 
 
     app.get('/heartbeat', AuthController.isAuthenticated, HeartBeatController.ping);
-    app.get('/login', UserController.getUser);
+    app.post('/login', UserController.login);
     app.post('/register', UserController.register);
+
+
+    App.app.use(function (err, req, res, next) {
+
+        if (typeof err === 'object') {
+            res.status(500).json(err);
+        } else {
+            res.status(500).json({
+                message: err,
+            });
+        }
+    })
 
 
 };

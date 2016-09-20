@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var bcrypt = require('bcrypt-nodejs');
+var bcrypt = require('bcrypt');
 var moment = require('moment');
 
 var auth = App.require('modules/auth.js');
@@ -21,6 +21,11 @@ var UserSchema = new mongoose.Schema({
         default: function () {
             return moment.utc().toString();
         }
+    },
+    roles: {
+        type: Array,
+        required: true,
+        default: ["*"]
     },
     token: {
         type: String,
@@ -51,7 +56,7 @@ UserSchema.pre('save', function (callback) {
     bcrypt.genSalt(5, function (err, salt) {
         if (err) return callback(err);
 
-        bcrypt.hash(user.password, salt, null, function (err, hash) {
+        bcrypt.hash(user.password, salt, function (err, hash) {
             if (err) return callback(err);
             user.password = hash;
             callback();
@@ -60,6 +65,7 @@ UserSchema.pre('save', function (callback) {
 });
 
 UserSchema.methods.verifyPassword = function (password, cb) {
+
     bcrypt.compare(password, this.password, function (err, isMatch) {
         if (err) return cb(err);
         cb(null, isMatch);

@@ -1,6 +1,7 @@
-var User = App.require('./models/user.js');
+var User = App.require('models/user.js');
+var auth = App.require("modules/auth.js")
 
-exports.register = function (req, res) {
+exports.register = function (req, res, next) {
     var user = new User({
         username: req.body.username,
         password: req.body.password
@@ -8,9 +9,10 @@ exports.register = function (req, res) {
     App.logger.log('verbose', 'Request to create user %s', user.username);
 
     user.save(function (err) {
+        console.log(next);
         if (err) {
             App.logger.log('error', err);
-            res.send("failed to create user");
+            next("failed to create user");
         } else {
             res.json({
                 message: 'User created'
@@ -19,12 +21,45 @@ exports.register = function (req, res) {
     });
 };
 
-exports.getUser = function (req, res) {
-    User.find(function (err, users) {
+exports.login = function (req, res, next) {
+
+    User.findOne({
+        "username": req.body.username
+    }, function (err, user) {
         if (err) {
             App.logger.log('error', err);
-            res.send("failed to get requested user");
+            next('unable to lookup user');
         }
-        res.json(users);
+        if (user === null) {
+            next("user not found");
+        } else {
+            console.log(req.body.password);
+            user.verifyPassword(req.body.password, function (err, isMatch) {
+                if (isMatch) {
+                    var newToken = auth.generateBearerToken();
+                    user.token = newToken;
+                    user.save(function (err) {
+
+                        if (err) {
+                            App.logger.log('error', err);
+                            res.send("unable to save new session token");
+                        } else {
+                            res.json({
+                                username: user.username,
+                                roles: user.roles,
+                                id: user._id,
+                                token: newToken
+                            });
+                        }
+                    });
+                } else {
+                    res.status(401).send("invalid password");
+                }
+            });
+
+
+
+
+        }
     });
 };

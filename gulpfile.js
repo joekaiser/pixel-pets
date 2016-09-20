@@ -11,6 +11,10 @@ var image = require('gulp-image');
 var autoprefixer = require('gulp-autoprefixer');
 var CacheBuster = require('gulp-cachebust');
 var del = require('del');
+var argv = require('yargs').argv;
+var gulpif = require('gulp-if');
+
+console.log(argv.production);
 
 var cachebust = new CacheBuster({
     random: false,
@@ -40,10 +44,11 @@ gulp.task('build-css', ['clean-dist'], function (cb) {
 
 gulp.task('build-js', ['clean-dist'], function (cb) {
     pump([
+
         gulp.src(['./www/app.js', './www/**/*.js']),
         sourcemaps.init(),
         concat('site-scripts.js'),
-        uglify(),
+        gulpif(argv.production, uglify()),
         //cachebust.resources(),
         sourcemaps.write('./'),
 

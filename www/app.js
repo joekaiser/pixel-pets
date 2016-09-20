@@ -74,9 +74,11 @@ function ($stateProvider, $urlRouterProvider, USER_ROLES) {
 
 }])
 
-.run(['$log', '$rootScope', '$transitions', 'AUTH_EVENTS', 'AuthService',
-function ($log, $rootScope, $transitions, AUTH_EVENTS, AuthService) {
+.run(['$log', '$rootScope', '$transitions', '$http', 'AUTH_EVENTS', 'AuthService',
+function ($log, $rootScope, $transitions, $http, AUTH_EVENTS, AuthService) {
 
+        $http.defaults.headers.common['Accept'] = 'application/json, text/plain, * / *';
+        $http.defaults.headers.post['Content-Type'] = 'application/json';
         $transitions.onBefore({
                 to: function (state) {
                     return state.data && state.data.authorizedRole;
