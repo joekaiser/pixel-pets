@@ -107,7 +107,6 @@ function ($log, $rootScope, $transitions, $http, AUTH_EVENTS, AuthService) {
 .controller('ApplicationController', ['$log', '$rootScope', '$scope', '$state', 'USER_ROLES', 'AUTH_EVENTS', 'AuthService',
   function ($log, $rootScope, $scope, $state, USER_ROLES, AUTH_EVENTS, AuthService) {
         $scope.currentUser = null;
-        $scope.userRoles = USER_ROLES;
         $scope.isAuthorized = AuthService.isAuthorized;
 
         $scope.setCurrentUser = function (user) {

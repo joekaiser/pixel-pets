@@ -13,15 +13,16 @@ var CacheBuster = require('gulp-cachebust');
 var del = require('del');
 var argv = require('yargs').argv;
 var gulpif = require('gulp-if');
-
-console.log(argv.production);
+var nodemon = require('gulp-nodemon');
 
 var cachebust = new CacheBuster({
     random: false,
     checksumLength: 10
 });
 
-gulp.task('default', ['build-css', 'build-js', 'build-html'], function () {});
+var defaultTasks = ['build-css', 'build-js', 'build-html'];
+
+gulp.task('default', defaultTasks, function () {});
 
 gulp.task('build-css', ['clean-dist'], function (cb) {
     pump([
@@ -88,4 +89,16 @@ gulp.task('build-html', ['clean-dist', 'build-css', 'build-js'], function (cb) {
     //    ],
     //        cb
     //    );
+});
+
+gulp.task('serv', function () {
+    nodemon({
+            script: 'server.js',
+            ext: 'html js',
+            ignore: ['www/dist/'],
+            tasks: ['default']
+        })
+        .on('restart', function () {
+            console.log('restarted!')
+        })
 });
