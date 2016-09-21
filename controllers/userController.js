@@ -33,12 +33,10 @@ exports.login = function (req, res, next) {
         if (user === null) {
             next("user not found");
         } else {
-            console.log(req.body.password);
             user.verifyPassword(req.body.password, function (err, isMatch) {
                 if (isMatch) {
                     var newToken = auth.generateBearerToken();
-                    user.token = newToken;
-                    user.save(function (err) {
+                    user.resetToken(newToken, function (err) {
 
                         if (err) {
                             App.logger.log('error', err);

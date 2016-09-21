@@ -72,6 +72,12 @@ UserSchema.methods.verifyPassword = function (password, cb) {
     });
 };
 
+UserSchema.methods.resetToken = function (token, cb) {
+    this.token = token;
+    this.token_expires_at = moment.utc().add(4, 'hours').toString()
+    this.save(cb);
+}
+
 UserSchema.statics.findByToken = function (token, cb) {
     return this.findOne({
         "token": token
