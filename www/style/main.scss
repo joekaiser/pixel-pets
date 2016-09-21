@@ -1,33 +1,12 @@
-/*
-primary:#9b4dca (old #724882)
-success:#88A825
-warning:#CF4A30
-error:#911146
-highlight:#ED8C2B
-default:#eee
-hover:#606c76
-*/
-
+@import 'variables';
 body {
     background-color: #f2f5f7;
-}
-
-.container {
-    margin: auto;
-    max-width: 1128px;
-}
-
-.box {
-    background-color: #fff;
-    border: 1px solid #d3e0e9;
-    border-radius: 4px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
 .navbar {
     background-color: #724882;
     height: 80px;
-    color: #eee;
+    color: $default-color;
     padding: 10px;
     margin-bottom: 10px;
     .brand {
@@ -35,15 +14,13 @@ body {
         font-size: 2.5rem;
         display: inline-block;
     }
-}
-
-.navbar a,
-.navbar a:visited {
-    color: #ED8C2B;
-}
-
-.navbar a:hover {
-    color: #eee;
+    a,
+    a:visited {
+        color: $highlight-color;
+    }
+    a:hover {
+        color: $default-color;
+    }
 }
 
 a {
@@ -67,7 +44,7 @@ nav {
         font-size: 1.5rem;
     }
     a.active {
-        background-color: #606c76;
+        background-color: $hover-color;
         color: #fff;
     }
 }

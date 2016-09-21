@@ -28,10 +28,10 @@ exports.login = function (req, res, next) {
     }, function (err, user) {
         if (err) {
             App.logger.log('error', err);
-            next('unable to lookup user');
+            next('User lookup failed. Please try later');
         }
         if (user === null) {
-            next("user not found");
+            next(req.body.username + " is not a valid username");
         } else {
             user.verifyPassword(req.body.password, function (err, isMatch) {
                 if (isMatch) {
@@ -51,7 +51,7 @@ exports.login = function (req, res, next) {
                         }
                     });
                 } else {
-                    res.status(401).send("invalid password");
+                    res.status(401).send("The password was wrong");
                 }
             });
 
