@@ -59,11 +59,14 @@ gulp.task('build-js', ['clean-dist'], function (cb) {
     );
 });
 
-gulp.task('optimizeImages', function (cb) {
+gulp.task('optimize-images', function (cb) {
     pump([
         gulp.src('./www/assets/*'),
         image(),
-        gulp.dest('./www/assets')
+        gulp.dest('./www/assets'),
+        gulp.src('./www/pets/*.png'),
+        image(),
+        gulp.dest('./www/pets')
     ],
         cb
     );
