@@ -76,4 +76,4 @@ modules/views/
 #webpack
 /bundle
 
-launch.json
+.vscode/
