@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var moment = require('moment');
 
 
 
@@ -23,15 +24,15 @@ var PetSchema = new mongoose.Schema({
     },
     ownerId: {
         type: String,
-        required: true
+        required: true,
         default: "<<system>>"
+    },
+    image: {
+        type: String,
+        required: true
     }
 
 });
-
-
-
-
 
 // Export the Mongoose model
 module.exports = mongoose.model('Pet', PetSchema);

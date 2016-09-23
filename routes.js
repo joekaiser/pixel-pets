@@ -2,6 +2,7 @@ var AuthController = App.require('modules/auth.js')
 module.exports = function (app) {
     var HeartBeatController = App.require('controllers/heartbeatController.js');
     var UserController = App.require('controllers/userController.js');
+    var PetController = App.require('controllers/petController.js');
 
     app.get("/", function (request, response) {
         response.sendFile(__dirname + '/www/index.html');
@@ -14,15 +15,13 @@ module.exports = function (app) {
     app.post('/register', UserController.register);
 
 
-    App.app.use(function (err, req, res, next) {
+    app.post('/pets/systemPet', PetController.addSystemPet);
 
-        if (typeof err === 'object') {
-            res.status(500).json(err);
-        } else {
-            res.status(500).json({
-                message: err,
-            });
-        }
+
+    App.app.use(function (err, req, res, next) {
+        res.status(500).json({
+            message: err,
+        });
     })
 
 

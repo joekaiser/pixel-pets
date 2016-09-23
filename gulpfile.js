@@ -102,6 +102,8 @@ gulp.task('serv', function () {
             tasks: ['default']
         })
         .on('restart', function () {
-            console.log('restarted!')
+            console.log("");
+            console.log('restarted!');
+            console.log("");
         })
 });

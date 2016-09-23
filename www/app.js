@@ -36,7 +36,8 @@ function ($stateProvider, $urlRouterProvider, USER_ROLES) {
             })
             .state('app.house', {
                 url: '',
-                template: 'house',
+                templateUrl: '/views/home/home.html',
+                controller: 'homeController',
                 data: {
                     authorizedRole: USER_ROLES.all
                 }

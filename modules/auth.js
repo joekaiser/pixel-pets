@@ -23,6 +23,12 @@ exports.isAuthenticated = passport.authenticate('bearer', {
     session: false
 });
 
+exports.isAdmin = function (user) {
+
+    return user.roles.indexOf("admin") !== -1;
+
+}
+
 exports.generateBearerToken = function () {
     return crypto.randomBytes(20).toString('hex');
 };

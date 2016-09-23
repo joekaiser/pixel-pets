@@ -5,6 +5,7 @@ var logger = require('./logging.js');
 var passport = require('passport');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+require('es6-promise').polyfill();
 
 logger.log('info', 'Loading Pixel Pets in %s mode', env);
 

@@ -1,24 +1,39 @@
 var User = App.require('models/user.js');
-var auth = App.require("modules/auth.js")
+var Pet = App.require('models/pet.js');
+var Auth = App.require("modules/auth.js")
+
+
 
 exports.register = function (req, res, next) {
+
+    App.logger.log('verbose', 'Request to create user %s', req.body.username);
+
     var user = new User({
         username: req.body.username,
         password: req.body.password
     });
-    App.logger.log('verbose', 'Request to create user %s', user.username);
 
-    user.save(function (err) {
-        console.log(next);
-        if (err) {
-            App.logger.log('error', err);
-            next("failed to create user");
-        } else {
-            res.json({
-                message: 'User created'
-            });
-        }
-    });
+    user.save()
+        .then(function () {
+            return Pet.findOne({
+                "name": "Egg",
+                "ownerId": "<<system>>"
+            })
+        })
+        .then(function (pet) {
+            var newPet = pet.toObject();
+            delete newPet._id;
+            newPet.ownerId = user._id;
+            return new Pet(newPet).save();
+        })
+        .then(function () {
+            res.json({ message: 'User created' });
+        })
+        .catch(function (err) {
+            if (user != null) user.remove();
+            App.logger.log(err);
+            next(err);
+        });
 };
 
 exports.login = function (req, res, next) {
@@ -35,7 +50,7 @@ exports.login = function (req, res, next) {
         } else {
             user.verifyPassword(req.body.password, function (err, isMatch) {
                 if (isMatch) {
-                    var newToken = auth.generateBearerToken();
+                    var newToken = Auth.generateBearerToken();
                     user.resetToken(newToken, function (err) {
 
                         if (err) {

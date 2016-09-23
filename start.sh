@@ -1,5 +1,4 @@
 #!/bin/bash
 
-
 gulp
-node server.js
+node --inspect server.js
