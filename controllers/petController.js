@@ -2,6 +2,7 @@ var Pet = App.require('models/pet.js');
 var auth = App.require('modules/auth.js');
 
 exports.addSystemPet = function (req, res, next) {
+    next("endpoint not secure");
     var pet = new Pet({
         name: req.body.name,
         description: req.body.description,
@@ -18,5 +19,16 @@ exports.addSystemPet = function (req, res, next) {
             res.json(pet);
         }
     });
+};
+
+exports.getUsersPets = function (req, res, next) {
+    Pet.find({ ownerId: req.query.userId })
+        .then(function (pets) {
+            res.json(pets);
+        })
+        .catch(function (err) {
+            App.logger.log('error', err);
+            next("unable to get pets");
+        });
 };
 

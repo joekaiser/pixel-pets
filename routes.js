@@ -15,7 +15,8 @@ module.exports = function (app) {
     app.post('/register', UserController.register);
 
 
-    app.post('/pets/systemPet', PetController.addSystemPet);
+    app.post('/pets/systemPet', AuthController.isAuthenticated, PetController.addSystemPet);
+    app.get('/pets/userpets', AuthController.isAuthenticated, PetController.getUsersPets);
 
 
     App.app.use(function (err, req, res, next) {

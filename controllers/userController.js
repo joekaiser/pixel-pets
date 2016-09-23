@@ -1,7 +1,7 @@
 var User = App.require('models/user.js');
 var Pet = App.require('models/pet.js');
 var Auth = App.require("modules/auth.js")
-
+var moment = require('moment');
 
 
 exports.register = function (req, res, next) {
@@ -24,6 +24,7 @@ exports.register = function (req, res, next) {
             var newPet = pet.toObject();
             delete newPet._id;
             newPet.ownerId = user._id;
+            newPet.created_at = moment.utc().toString();
             return new Pet(newPet).save();
         })
         .then(function () {
@@ -31,7 +32,7 @@ exports.register = function (req, res, next) {
         })
         .catch(function (err) {
             if (user != null) user.remove();
-            App.logger.log(err);
+            App.logger.log('error', err);
             next(err);
         });
 };
