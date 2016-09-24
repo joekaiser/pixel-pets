@@ -11,12 +11,30 @@
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
-.notification {
-    padding: 6px;
-    border: 1px solid #d3e0e9;
-    border-radius: 4px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-    min-height: 18px;
+.notifications {
+    .error {
+        background-color: $error-color;
+        border: 1px solid darken($error-color, 20%);
+        margin: 2px 0;
+    }
+    .success {
+        background-color: $success-color;
+        border: 1px solid darken($success-color, 20%);
+        margin: 2px 0;
+    }
+    .warning {
+        background-color: $warning-color;
+        border: 1px solid darken($warning-color, 20%);
+        margin: 2px 0;
+    }
+    .info {
+        background-color: $primary-color;
+        border: 1px solid darken($primary-color, 20%);
+        margin: 2px 0;
+    }
+    .close-click {
+        float: right;
+    }
 }
 
 .error-text {

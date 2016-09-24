@@ -1,21 +1,37 @@
-angular.module('pixelPets').controller('loginController', ['$rootScope', '$scope', '$state', 'AUTH_EVENTS', 'AuthService', 'Session', function ($rootScope, $scope, $state, AUTH_EVENTS, AuthService, Session) {
+angular.module('pixelPets').controller('loginController', ['$rootScope', '$scope', '$state', '$http', 'AUTH_EVENTS', 'AuthService', 'Session',
+    function($rootScope, $scope, $state, $http, AUTH_EVENTS, AuthService, Session) {
 
-    $scope.signin = function () {
 
-        AuthService.login($scope.username, $scope.password).then(function (res) {
-            $scope.loginError = undefined;
-            Session.create(res.data.token, res.data.id, res.data.roles);
-            $scope.setCurrentUser(res.data);
-            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-            $state.transitionTo('app.house');
-        }, function (err) {
-            $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-            if (err.status === 401) {
-                $scope.loginError = "The password was wrong";
-            } else {
-                $scope.loginError = "Login Failed. Please try again later";
+
+
+        var loginUser = function() {
+
+            if (Session.loadFromCache()) {
+                $http.defaults.headers.common['Authorization'] = 'bearer ' + Session.data().token;
+                $scope.setCurrentUser(Session.data());
+                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                $state.transitionTo('app.house');
             }
-        });
-    };
+        }
 
-}]);
+        $scope.signin = function() {
+
+            AuthService.login($scope.username, $scope.password).then(function(res) {
+                $scope.loginError = undefined;
+                Session.create(res.data);
+                loginUser();
+            }, function(err) {
+                $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+                if (err.status === 401) {
+                    $scope.loginError = "The password was wrong";
+                } else {
+                    $scope.loginError = "Login Failed. Please try again later";
+                }
+            });
+        };
+
+        (function constructor() {
+            loginUser();
+        })();
+    }
+]);

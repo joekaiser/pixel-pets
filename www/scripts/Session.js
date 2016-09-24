@@ -1,12 +1,28 @@
-angular.module('pixelPets').service('Session', function () {
-  this.create = function (sessionId, userId, userRole) {
-    this.id = sessionId;
-    this.userId = userId;
-    this.userRole = userRole;
-  };
-  this.destroy = function () {
-    this.id = null;
-    this.userId = null;
-    this.userRole = null;
-  };
+angular.module('pixelPets').service('Session', function() {
+
+
+
+    var data = { token: null, id: null, roles: null, username: null };
+
+    this.loadFromCache = function() {
+        data = lscache.get('session');
+        return check.assigned(data);
+    }
+
+
+    this.create = function(user) {
+        data = user;
+
+        lscache.set('session', data);
+
+    };
+    this.destroy = function() {
+        data = {};
+        lscache.remove('session');
+    };
+
+    this.data = function() {
+        if (!check.assigned(data)) data = {};
+        return data;
+    }
 });

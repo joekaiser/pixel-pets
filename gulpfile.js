@@ -97,7 +97,7 @@ gulp.task('build-html', ['clean-dist', 'build-css', 'build-js'], function (cb) {
 gulp.task('serv', function () {
     nodemon({
             script: 'server.js',
-            ext: 'html js',
+            ext: 'html js scss',
             ignore: ['www/dist/'],
             tasks: ['default']
         })
