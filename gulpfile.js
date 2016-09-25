@@ -20,59 +20,61 @@ var cachebust = new CacheBuster({
     checksumLength: 10
 });
 
-var defaultTasks = ['build-css', 'build-js', 'build-html'];
+var defaultTasks = ['build-css', 'build-js'];
 
-gulp.task('default', defaultTasks, function () {});
+gulp.task('default', defaultTasks, function() {
 
-gulp.task('build-css', ['clean-dist'], function (cb) {
+});
+
+gulp.task('build-css', ['clean-dist'], function(cb) {
     pump([
-        gulp.src('./www/style/*.scss'),
-        sourcemaps.init(),
-        sass(),
-        autoprefixer({
+            gulp.src('./www/style/*.scss'),
+            sourcemaps.init(),
+            sass(),
+            autoprefixer({
                 browsers: ['last 2 versions'],
                 cascade: false
             }),
-        concat('site-style.css'),
-        cleanCSS(),
-        //cachebust.resources(),
-        sourcemaps.write('./'),
-        gulp.dest('./www/dist')
-    ],
+            concat('site-style.css'),
+            cleanCSS(),
+            //cachebust.resources(),
+            sourcemaps.write('./'),
+            gulp.dest('./www/dist')
+        ],
         cb
     );
 });
 
-gulp.task('build-js', ['clean-dist'], function (cb) {
+gulp.task('build-js', ['clean-dist'], function(cb) {
     pump([
 
-        gulp.src(['./www/app.js', './www/**/*.js']),
-        sourcemaps.init(),
-        concat('site-scripts.js'),
-        gulpif(argv.production, uglify()),
-        //cachebust.resources(),
-        sourcemaps.write('./'),
+            gulp.src(['./www/app.js', './www/**/*.js']),
+            sourcemaps.init(),
+            concat('site-scripts.js'),
+            gulpif(argv.production, uglify()),
+            //cachebust.resources(),
+            sourcemaps.write('./'),
 
-        gulp.dest('./www/dist')
-    ],
+            gulp.dest('./www/dist')
+        ],
         cb
     );
 });
 
-gulp.task('optimize-images', function (cb) {
+gulp.task('optimize-images', function(cb) {
     pump([
-        gulp.src('./www/assets/*'),
-        image(),
-        gulp.dest('./www/assets'),
-        gulp.src('./www/pets/*.png'),
-        image(),
-        gulp.dest('./www/pets')
-    ],
+            gulp.src('./www/assets/*'),
+            image(),
+            gulp.dest('./www/assets'),
+            gulp.src('./www/pets/*.png'),
+            image(),
+            gulp.dest('./www/pets')
+        ],
         cb
     );
 });
 
-gulp.task('clean-dist', function (cb) {
+gulp.task('clean-dist', function(cb) {
 
     return del(['./www/dist/site-*']);
 
@@ -80,28 +82,14 @@ gulp.task('clean-dist', function (cb) {
 
 
 
-gulp.task('build-html', ['clean-dist', 'build-css', 'build-js'], function (cb) {
-    /*disabling this task because it doesn't seem to like reading/writing to the same file.
-    it works the first time, but any other run wont pick up the reference
-    becuase the tag would read <script src="/dist/site-scripts-1234567890.js"></script> */
-
-    //    pump([
-    //        gulp.src('./views/*.html'),
-    //        cachebust.references(),
-    //        gulp.dest('./views')
-    //    ],
-    //        cb
-    //    );
-});
-
-gulp.task('serv', function () {
+gulp.task('serv', function() {
     nodemon({
             script: 'server.js',
             ext: 'html js scss',
             ignore: ['www/dist/'],
             tasks: ['default']
         })
-        .on('restart', function () {
+        .on('restart', function() {
             console.log("");
             console.log('restarted!');
             console.log("");

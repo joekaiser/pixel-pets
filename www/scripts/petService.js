@@ -17,5 +17,12 @@ angular.module('pixelPets').factory('PetService', ['$http', function($http) {
         });
     };
 
+    service.hatchEgg = function(eggId, uid) {
+        return $http.post('/pets/hatch', {
+            "id": eggId,
+            "userId": uid
+        });
+    };
+
     return service;
 }]);

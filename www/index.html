@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <title>Pixel Pets</title>
@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,500,500italic">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.1.0/milligram.min.css">
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/assets/ngNotificationsBar/ngNotificationsBar.css">
     <link rel="stylesheet" href="/dist/site-style.css">
 
@@ -16,24 +17,29 @@
 </head>
 
 <body ng-app="pixelPets" ng-controller="ApplicationController">
-    <div class="navbar">
+
+
+    <nav class="navbar">
         <div class="container">
-            <span class="brand">Pixel Pets</span>
-            <div ng-if="currentUser" class="pull-right">Welcome, {{currentUser.username}}
-                <a ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+            <div class="navbar-header">
+                <div class="navbar-brand">Pixel Pets</div>
             </div>
         </div>
-    </div>
+    </nav>
 
     <div class="container">
         <ui-view></ui-view>
     </div>
+    <script src="//use.fontawesome.com/d49caf12d2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lscache/1.0.7/lscache.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="//npmcdn.com/angular-ui-router@1.0.0-beta.2/release/angular-ui-router.min.js"></script>
-    <script src="//use.fontawesome.com/d49caf12d2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0-beta.6/angular-moment.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+
     <srcipt src="./assets/ngNotificationsBar/ngNotificationsBar.min.js"></srcipt>
     <srcipt src="./assets/check-types.min.js"></srcipt>
     <script src="/dist/site-scripts.js"></script>

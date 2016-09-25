@@ -1,0 +1,40 @@
+@import 'variables.scss';
+.navbar {
+    background-color: $primary-color;
+    border-radius: 0;
+    color: $default-color;
+    .navbar-brand {
+        color: #fff;
+        font-size: 2.5rem;
+        text-shadow: none;
+    }
+    li>a,
+    li>a:visited {
+        color: $highlight-color;
+        cursor: pointer;
+    }
+    li>a:hover {
+        color: $default-color;
+        cursor: pointer;
+    }
+}
+
+.btn {
+    background-color: transparent;
+    border: 1px solid $primary-color;
+    background-image: none;
+    &.btn-primary {
+        background-color: $primary-color;
+        border: 0;
+        color: #fff;
+    }
+    &.btn-link {
+        border: 0;
+    }
+}
+
+.panel {
+    .panel-heading{
+        background-image: none;
+    }
+}

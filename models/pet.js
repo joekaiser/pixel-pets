@@ -14,9 +14,13 @@ var PetSchema = new mongoose.Schema({
     created_at: {
         type: Date,
         required: true,
-        default: function () {
-            return moment.utc().toString();
+        default: function() {
+            return moment.utc();
         }
+    },
+    hatched_at: {
+        type: Date,
+        required: false
     },
     description: {
         type: String,

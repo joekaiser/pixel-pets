@@ -18,8 +18,8 @@ var UserSchema = new mongoose.Schema({
     created_at: {
         type: Date,
         required: true,
-        default: function () {
-            return moment.utc().toString();
+        default: function() {
+            return moment.utc();
         }
     },
     roles: {
@@ -31,32 +31,32 @@ var UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        default: function () {
+        default: function() {
             return auth.generateBearerToken();
         }
     },
     token_expires_at: {
         type: Date,
         required: true,
-        default: function () {
+        default: function() {
             var utcNow = moment.utc();
-            return utcNow.add(4, 'hours').toString();
+            return utcNow.add(4, 'hours');
         }
     }
 });
 
 // Execute before each user.save() call
-UserSchema.pre('save', function (callback) {
+UserSchema.pre('save', function(callback) {
     var user = this;
 
     // Break out if the password hasn't changed
     if (!user.isModified('password')) return callback();
 
     // Password changed so we need to hash it
-    bcrypt.genSalt(5, function (err, salt) {
+    bcrypt.genSalt(5, function(err, salt) {
         if (err) return callback(err);
 
-        bcrypt.hash(user.password, salt, function (err, hash) {
+        bcrypt.hash(user.password, salt, function(err, hash) {
             if (err) return callback(err);
             user.password = hash;
             callback();
@@ -64,21 +64,21 @@ UserSchema.pre('save', function (callback) {
     });
 });
 
-UserSchema.methods.verifyPassword = function (password, cb) {
+UserSchema.methods.verifyPassword = function(password, cb) {
 
-    bcrypt.compare(password, this.password, function (err, isMatch) {
+    bcrypt.compare(password, this.password, function(err, isMatch) {
         if (err) return cb(err);
         cb(null, isMatch);
     });
 };
 
-UserSchema.methods.resetToken = function (token, cb) {
+UserSchema.methods.resetToken = function(token, cb) {
     this.token = token;
     this.token_expires_at = moment.utc().add(4, 'hours').toString()
     this.save(cb);
 }
 
-UserSchema.statics.findByToken = function (token, cb) {
+UserSchema.statics.findByToken = function(token, cb) {
     return this.findOne({
         "token": token
     }, cb);

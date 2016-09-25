@@ -1,29 +1,28 @@
-<div class="box" ng-if="eggs">
-    <div class="heading">
-        <span class="label">Hey!</span> It looks like you have an egg to hatch!
+<div class="panel panel-default" ng-if="eggs">
+    <div class="panel-heading">
+        <h4 class="panel-title"><span class="label label-info">Hey!</span> You have eggs to hatch!<span class="hidden-xs"> I wonder what is inside.</span></h4>
     </div>
-    <div class="content">
-        <div class="row ">
-            <div class="column " ng-repeat="egg in eggs ">
+
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-3" ng-repeat="egg in eggs">
                 <div>
-                    <img class="egg center " src="/pets/{{egg.image}} ">
+                    <img ng-click="hatch(egg._id)" class="clickable img-responsive center-block" ng-src="/pets/{{egg.image}}">
                 </div>
-                <button class="center button button-clear ">Hatch</button>
+                <button ng-click="hatch(egg._id)" class="btn btn-link center-block">Hatch</button>
             </div>
         </div>
     </div>
+
 </div>
 
-<div class="box">
-    <div class="row">
-        <div class="column column-50 column-offset-25">
-
-            <div>
-                <span class=" text-center text-largest">Polly</span>&nbsp;<span class="text-center text-small text-muted text-center">born sept 24, 2016</span> 
+<div class=" panel panel-default ">
+    <div class="panel-body ">
+        <div class="row ">
+            <div class="col col-sm-6 " ng-repeat="pet in pets ">
+                <h4>{{pet.name}} <small class="text-center muted ">born {{pet.hatched_at | amDateFormat:'MMM Do YYYY'}}</small></h4>
+                <img ng-src="pets/{{pet.image}} " class="img-responsive center-block ">
             </div>
-            <img src="pets/polly.png " class="center ">
         </div>
-
-
     </div>
 </div>

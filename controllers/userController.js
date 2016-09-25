@@ -28,18 +28,18 @@ exports.register = function(req, res, next) {
             var newPet = pet.toObject();
             delete newPet._id;
             newPet.ownerId = user._id;
-            newPet.created_at = moment.utc().toString();
+            newPet.created_at = moment.utc();
             return new Pet(newPet).save();
         })
-        .then(function() {
-            var note = new Notification({
-                ownerId: user._id,
-                title: '',
-                description: 'You found an egg! Hatch it to see what is inside.'
-            });
+        // .then(function() {
+        //     var note = new Notification({
+        //         ownerId: user._id,
+        //         title: '',
+        //         description: 'You found an egg! Hatch it to see what is inside.'
+        //     });
 
-            return note.save();
-        })
+        //     return note.save();
+        // })
         .then(function() {
             res.json({ message: 'User created' });
         })
