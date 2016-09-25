@@ -9,5 +9,13 @@ angular.module('pixelPets').factory('PetService', ['$http', function($http) {
         });
     };
 
+    service.getUserEggs = function(uid) {
+        return $http.get('/pets/usereggs', {
+            params: {
+                "userId": uid
+            }
+        });
+    };
+
     return service;
 }]);

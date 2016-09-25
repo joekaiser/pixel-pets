@@ -1,10 +1,12 @@
 angular.module('pixelPets').controller('homeController', ['$log', '$rootScope', '$scope', 'Session', 'notifications', 'PetService',
     function($log, $rootScope, $scope, Session, notifications, PetService) {
 
-        PetService.getUserPets(Session.userId)
+
+
+        PetService.getUserEggs(Session.data().id)
             .then(function(res) {
-                var pets = res.data;
-                
+                $scope.eggs = res.data;
+
             })
             .catch(function(err) {
                 $log.error(err);

@@ -1,0 +1,13 @@
+angular.module('pixelPets').factory('NotificationService', ['$http', function($http) {
+    var service = {};
+
+    service.getUsersNotes = function(uid) {
+        return $http.get('/user/notes', {
+            params: {
+                "userId": uid
+            }
+        });
+    };
+
+    return service;
+}]);

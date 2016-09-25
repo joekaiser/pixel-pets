@@ -1,3 +1,29 @@
-<div class="notification">
-    Something here
+<div class="box" ng-if="eggs">
+    <div class="heading">
+        <span class="label">Hey!</span> It looks like you have an egg to hatch!
+    </div>
+    <div class="content">
+        <div class="row ">
+            <div class="column " ng-repeat="egg in eggs ">
+                <div>
+                    <img class="egg center " src="/pets/{{egg.image}} ">
+                </div>
+                <button class="center button button-clear ">Hatch</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box">
+    <div class="row">
+        <div class="column column-50 column-offset-25">
+
+            <div>
+                <span class=" text-center text-largest">Polly</span>&nbsp;<span class="text-center text-small text-muted text-center">born sept 24, 2016</span> 
+            </div>
+            <img src="pets/polly.png " class="center ">
+        </div>
+
+
+    </div>
 </div>

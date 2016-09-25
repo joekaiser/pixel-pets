@@ -1,7 +1,7 @@
 var Pet = App.require('models/pet.js');
 var auth = App.require('modules/auth.js');
 
-exports.addSystemPet = function (req, res, next) {
+exports.addSystemPet = function(req, res, next) {
     next("endpoint not secure");
     var pet = new Pet({
         name: req.body.name,
@@ -11,7 +11,7 @@ exports.addSystemPet = function (req, res, next) {
 
     App.logger.log('warn', "Request to create pet %s", pet.name);
 
-    pet.save(function (err) {
+    pet.save(function(err) {
         if (err) {
             App.logger.log('error', err);
             next("failed to crete pet. See log");
@@ -21,14 +21,24 @@ exports.addSystemPet = function (req, res, next) {
     });
 };
 
-exports.getUsersPets = function (req, res, next) {
-    Pet.find({ ownerId: req.query.userId })
-        .then(function (pets) {
+exports.getUsersPets = function(req, res, next) {
+    Pet.find({ ownerId: req.query.userId }).where('name').ne('Egg')
+        .then(function(pets) {
             res.json(pets);
         })
-        .catch(function (err) {
+        .catch(function(err) {
             App.logger.log('error', err);
             next("unable to get pets");
         });
 };
 
+exports.getUsersEggs = function(req, res, next) {
+    Pet.find({ ownerId: req.query.userId }).where('name').eq('Egg')
+        .then(function(pets) {
+            res.json(pets);
+        })
+        .catch(function(err) {
+            App.logger.log('error', err);
+            next("unable to get Eggs");
+        });
+};
