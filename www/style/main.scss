@@ -37,3 +37,9 @@ nav {
 .clickable {
     cursor: pointer!important;
 }
+
+.pet {
+    &.name {
+        text-transform: capitalize;
+    }
+}

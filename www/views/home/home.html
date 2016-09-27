@@ -20,8 +20,22 @@
     <div class="panel-body ">
         <div class="row ">
             <div class="col col-sm-6 " ng-repeat="pet in pets ">
-                <h4>{{pet.name}} <small class="text-center muted ">born {{pet.hatched_at | amDateFormat:'MMM Do YYYY'}}</small></h4>
+                <h3 class="pet name text-center">{{pet.name}}</h3>
                 <img ng-src="pets/{{pet.image}} " class="img-responsive center-block ">
+                <div class="center-block">
+                    <div>
+                        <span class="text-muted">Age</span>
+                        <span>{{pet.hatched_at | amUtc | amLocal | amDifference : null : 'days' | amDurationFormat :"day"}}</span>
+                    </div>
+                    <div>
+                        <span class="text-muted">Health</span>
+                        <span>Good</span>
+                    </div>
+                    <div>
+                        <span class="text-muted">Happiness</span>
+                        <span>Great</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
