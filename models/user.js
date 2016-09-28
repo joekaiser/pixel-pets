@@ -73,15 +73,19 @@ UserSchema.methods.verifyPassword = function(password, cb) {
 };
 
 UserSchema.methods.resetToken = function(token, cb) {
-    this.token = token;
-    this.token_expires_at = moment.utc().add(4, 'hours').toString()
-    this.save(cb);
+    if (token) this.token = token;
+    this.token_expires_at = moment.utc().add(3, 'h').toString()
+    if (cb) {
+        this.save(cb);
+    } else {
+        return this.save();
+    }
 }
 
-UserSchema.statics.findByToken = function(token, cb) {
+UserSchema.statics.findByToken = function(token) {
     return this.findOne({
         "token": token
-    }, cb);
+    });
 }
 
 
