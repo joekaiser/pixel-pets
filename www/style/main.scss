@@ -39,7 +39,10 @@ nav {
 }
 
 .pet {
-    &.name {
+    &.pet-name {
         text-transform: capitalize;
+    }
+    &.pet-thumbnail {
+        max-width: 100px;
     }
 }

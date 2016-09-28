@@ -19,18 +19,21 @@ exports.register = function(req, res, next) {
 
     user.save()
         .then(function() {
-            return Pet.findOne({
-                "name": "Egg",
-                "ownerId": "<<system>>"
-            })
+            return new Pet().giveUserAnEgg(user._id);
         })
-        .then(function(pet) {
-            var newPet = pet.toObject();
-            delete newPet._id;
-            newPet.ownerId = user._id;
-            newPet.created_at = moment.utc();
-            return new Pet(newPet).save();
-        })
+        // .then(function() {
+        //     return Pet.findOne({
+        //         "name": "Egg",
+        //         "ownerId": "<<system>>"
+        //     })
+        // })
+        // .then(function(pet) {
+        //     var newPet = pet.toObject();
+        //     delete newPet._id;
+        //     newPet.ownerId = user._id;
+        //     newPet.created_at = moment.utc();
+        //     return new Pet(newPet).save();
+        // })
         // .then(function() {
         //     var note = new Notification({
         //         ownerId: user._id,
@@ -38,9 +41,9 @@ exports.register = function(req, res, next) {
         //         description: 'You found an egg! Hatch it to see what is inside.'
         //     });
 
-        //     return note.save();
-        // })
-        .then(function() {
+    //     return note.save();
+    // })
+    .then(function() {
             res.json({ message: 'User created' });
         })
         .catch(function(err) {
@@ -51,7 +54,7 @@ exports.register = function(req, res, next) {
             }
 
             App.logger.log('error', err);
-            next(err);
+            next("failed to create user");
         });
 };
 

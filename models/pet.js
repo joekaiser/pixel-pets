@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var moment = require('moment');
-
+var random = require("random-js")();
 
 
 // Define our user schema
@@ -34,9 +34,28 @@ var PetSchema = new mongoose.Schema({
     image: {
         type: String,
         required: true
+    },
+    gender: {
+        type: String,
+        required: true,
+        default: function() {
+            return (random.bool() ? "male" : "female");
+        }
     }
 
 });
 
-// Export the Mongoose model
+
+PetSchema.methods.giveUserAnEgg = function(userId) {
+
+
+    this.ownerId = userId.toString();
+    this.name = 'Egg';
+    this.image = 'egg.png';
+    this.description = 'This is a Pixel Pet egg. Hatch it to see what is inside!';
+
+    return this.save();
+
+};
+
 module.exports = mongoose.model('Pet', PetSchema);

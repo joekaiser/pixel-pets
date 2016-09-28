@@ -11,33 +11,33 @@ var petKeys = [
 ];
 
 exports.addSystemPet = function(req, res, next) {
-        next("endpoint not secure");
-        var pet = new Pet({
-            name: req.body.name,
-            description: req.body.description,
-            image: req.body.image
+    next("endpoint not secure");
+    var pet = new Pet({
+        name: req.body.name,
+        description: req.body.description,
+        image: req.body.image
+    });
+
+    App.logger.log('warn', "Request to create pet %s", pet.name);
+
+    pet.save(function(err) {
+        if (err) {
+            ErrorHandler.logAndSend(err, "failed to create pet", next);
+        } else {
+            res.json(pet);
+        }
+    });
+};
+
+exports.getUsersPets = function(req, res, next) {
+    Pet.find({ ownerId: req.query.userId }).where('name').ne('Egg')
+        .then(function(pets) {
+            res.json(pets);
+        })
+        .catch(function(err) {
+            ErrorHandler.logAndSend(err, "failed to get pets for user", next);
         });
-
-        App.logger.log('warn', "Request to create pet %s", pet.name);
-
-        pet.save(function(err) {
-            if (err) {
-                ErrorHandler.logAndSend(err, "failed to create pet", next);
-            } else {
-                res.json(pet);
-            }
-        });
-    },
-
-    exports.getUsersPets = function(req, res, next) {
-        Pet.find({ ownerId: req.query.userId }).where('name').ne('Egg')
-            .then(function(pets) {
-                res.json(pets);
-            })
-            .catch(function(err) {
-                ErrorHandler.logAndSend(err, "failed to get pets for user", next);
-            });
-    };
+};
 
 exports.getUsersEggs = function(req, res, next) {
     Pet.find({ ownerId: req.query.userId }).where('name').eq('Egg')
