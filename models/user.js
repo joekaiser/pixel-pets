@@ -43,6 +43,7 @@ var UserSchema = new mongoose.Schema({
             return utcNow.add(4, 'hours');
         }
     }
+
 });
 
 // Execute before each user.save() call

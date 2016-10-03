@@ -6,4 +6,12 @@ $highlight-color:#ED8C2B;
 $default-color:#eee;
 $hover-color:#606c76;
 $dark-color:#35434C;
-$neutral-color:rgb(211, 212, 204)
+$neutral-color:rgb(211, 212, 204);
+$fa-bullhorn:'\f0a1';
+@mixin font-icon($id) {
+    /* font-awesome cheatsheet: http://fontawesome.io/cheatsheet/*/
+    content: $id;
+    font-family: FontAwesome;
+    position: absolute;
+
+}

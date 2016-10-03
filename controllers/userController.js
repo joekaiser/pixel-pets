@@ -21,29 +21,7 @@ exports.register = function(req, res, next) {
         .then(function() {
             return new Pet().giveUserAnEgg(user._id);
         })
-        // .then(function() {
-        //     return Pet.findOne({
-        //         "name": "Egg",
-        //         "ownerId": "<<system>>"
-        //     })
-        // })
-        // .then(function(pet) {
-        //     var newPet = pet.toObject();
-        //     delete newPet._id;
-        //     newPet.ownerId = user._id;
-        //     newPet.created_at = moment.utc();
-        //     return new Pet(newPet).save();
-        // })
-        // .then(function() {
-        //     var note = new Notification({
-        //         ownerId: user._id,
-        //         title: '',
-        //         description: 'You found an egg! Hatch it to see what is inside.'
-        //     });
-
-    //     return note.save();
-    // })
-    .then(function() {
+        .then(function() {
             res.json({ message: 'User created' });
         })
         .catch(function(err) {

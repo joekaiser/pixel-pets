@@ -81,3 +81,13 @@ exports.hatchEgg = function(req, res, next) {
             return ErrorHandler.logAndSend(err, "failed to hatch the egg", next);
         });
 };
+
+exports.giveEgg = function(req, res, next) {
+    new Pet().giveUserAnEgg(req.body.userId)
+        .then(function() {
+            res.send("success");
+        })
+        .catch(function(err) {
+            return ErrorHandler.logAndSend(err, "could not give that user an egg", next);
+        })
+}

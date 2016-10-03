@@ -1,4 +1,12 @@
 @import 'variables';
+body {
+    font-weight: 300!important;
+}
+
+b, strong{
+    font-weight: 500!important;
+}
+
 a {
     cursor: pointer;
 }
