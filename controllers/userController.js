@@ -61,7 +61,8 @@ exports.login = function(req, res, next) {
                                 username: user.username,
                                 roles: user.roles,
                                 id: user._id,
-                                token: newToken
+                                token: newToken,
+                                active_pet: user.active_pet
                             });
                         }
                     });

@@ -107,8 +107,19 @@ angular.module('pixelPets', ['ui.router', 'ngNotificationsBar', 'ngSanitize', 'a
     }
 ])
 
-.controller('ApplicationController', ['$log', '$rootScope', '$scope', '$state', 'USER_ROLES', 'AUTH_EVENTS', 'AuthService',
-    function($log, $rootScope, $scope, $state, USER_ROLES, AUTH_EVENTS, AuthService) {
+.controller('ApplicationController', ['$log', '$rootScope', '$scope', '$state', 'USER_ROLES', 'AUTH_EVENTS', 'AuthService', 'PetService', 'Session',
+    function($log, $rootScope, $scope, $state, USER_ROLES, AUTH_EVENTS, AuthService, PetService, Session) {
+
+        $scope.reloadUserPets = function() {
+            PetService.getUserPets(Session.data().id)
+                .then(function(res) {
+                    $scope.pets = res.data;
+                })
+                .catch(function(err) {
+                    $log.error(err);
+                });
+        };
+
         $scope.currentUser = null;
         $scope.isAuthorized = AuthService.isAuthorized;
 
@@ -123,6 +134,10 @@ angular.module('pixelPets', ['ui.router', 'ngNotificationsBar', 'ngSanitize', 'a
             $scope.currentUser = null;
             $state.transitionTo('main');
         };
+
+        $rootScope.$on(AUTH_EVENTS.loginSuccess, function() {
+            $scope.reloadUserPets();
+        });
 
         $rootScope.$on(AUTH_EVENTS.notAuthenticated, function() {
             $log.warn('not authenticated');

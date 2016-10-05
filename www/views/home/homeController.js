@@ -2,9 +2,6 @@ angular.module('pixelPets').controller('homeController', ['$log', '$rootScope', 
     function($log, $rootScope, $scope, Session, notifications, PetService) {
 
 
-
-
-
         var getEggs = function() {
             PetService.getUserEggs(Session.data().id)
                 .then(function(res) {
@@ -16,15 +13,7 @@ angular.module('pixelPets').controller('homeController', ['$log', '$rootScope', 
                 });
         };
 
-        var getPets = function() {
-            PetService.getUserPets(Session.data().id)
-                .then(function(res) {
-                    $scope.pets = res.data;
-                })
-                .catch(function(err) {
-                    $log.error(err);
-                });
-        };
+
 
         $scope.hatch = function(id) {
             PetService.hatchEgg(id, Session.data().id)
@@ -36,10 +25,13 @@ angular.module('pixelPets').controller('homeController', ['$log', '$rootScope', 
                 })
         };
 
+        $scope.isPetAssigned = function() {
+            return (check.assigned($scope.pets) && $scope.pets.length > 0 && check.assigned($scope.currentUser.active_pet));
+        };
+
 
         (function constructor() {
             getEggs();
-            getPets();
         })();
 
     }
