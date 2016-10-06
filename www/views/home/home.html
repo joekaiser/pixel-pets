@@ -23,23 +23,40 @@
 <div class=" panel panel-default ">
     <div class="panel-body ">
         <div class="row ">
-            <div class="col col-xs-12 col-sm-8">
+            <div class="col col-sm-7 col-md-5">
+                <div ng-show="activePet()">
+                    <h3 class="text-center">{{activePet().name}}</h3>
+                    <img ng-src="pets/{{activePet().image}}" class="img-responsive center-block">
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Born:</strong> {{activePet().hatched_at | amDateFormat:'MMM Do YYYY'}}</li>
+                        <li class="list-group-item"><strong>Age:</strong> {{activePet().hatched_at | amUtc | amLocal | amDifference : null : 'days' | amDurationFormat :"day"}}</li>
+                        <li class="list-group-item"><strong>Health:</strong> Good</li>
+                        <li class="list-group-item"><strong>Status:</strong> Happy</li>
+                    </ul>
+                </div>
+            </div>
 
-                <div class="media" ng-repeat="pet in pets">
+            <div class="col col-sm-4 col-sm-offset-1 col-md-6">
+                <div class="media" ng-hide="pet._id == currentUser.active_pet" ng-repeat="pet in pets">
                     <div class="media-left">
-
+                        <button ng-click="setActivePet(pet._id)" class='btn btn-xs btn-link visible-sm'>Choose {{pet.name}}</button>
                         <img ng-src="pets/{{pet.image}}" class="media-object pet pet-thumbnail">
                     </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">{{pet.name}}</h4>
-                        <p>{{pet.name}} was born on&nbsp;<span>{{pet.hatched_at | amDateFormat:'MMM Do YYYY'}}</span> &nbsp;and is <span>{{pet.hatched_at | amUtc | amLocal | amDifference : null : 'days' | amDurationFormat :"day"}}</span> old.</p>
-                        <p></p>
+                    <div class="media-body hidden-sm">
+                        <!--<h4 class="media-heading">{{pet.name}}</h4>-->
+                        <p>
+                            <strong>{{pet.name}}</strong> was born on&nbsp;
+                            <span>{{pet.hatched_at | amDateFormat:'MMM Do YYYY'}}</span>&nbsp;and is&nbsp;
+                            <span>{{pet.hatched_at | amUtc | amLocal | amDifference : null : 'days' | amDurationFormat :"day"}}</span>&nbsp;old.
+                        </p>
+                        <p>
+                            <button ng-click="setActivePet(pet._id)" class='btn btn-xs btn-link'>Choose {{pet.name}}</button>
+                        </p>
+
                     </div>
                 </div>
             </div>
-            <div class="col col-sm-4">
 
-            </div>
         </div>
     </div>
 </div>

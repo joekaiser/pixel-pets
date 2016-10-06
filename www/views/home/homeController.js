@@ -29,6 +29,10 @@ angular.module('pixelPets').controller('homeController', ['$log', '$rootScope', 
             return (check.assigned($scope.pets) && $scope.pets.length > 0 && check.assigned($scope.currentUser.active_pet));
         };
 
+        $scope.setActivePet = function(petId) {
+            $scope.currentUser.active_pet = petId;
+        };
+
 
         (function constructor() {
             getEggs();

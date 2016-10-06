@@ -120,6 +120,12 @@ angular.module('pixelPets', ['ui.router', 'ngNotificationsBar', 'ngSanitize', 'a
                 });
         };
 
+        $scope.activePet = function() {
+            return _.find($scope.pets, function(p) {
+                return p._id == $scope.currentUser.active_pet;
+            });
+        }
+
         $scope.currentUser = null;
         $scope.isAuthorized = AuthService.isAuthorized;
 
