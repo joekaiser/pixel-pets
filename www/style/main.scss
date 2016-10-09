@@ -3,11 +3,16 @@ body {
     font-weight: 300!important;
 }
 
-b, strong{
+b,
+strong {
     font-weight: 500!important;
 }
 
 a {
+    cursor: pointer;
+}
+
+.cursor-pointer {
     cursor: pointer;
 }
 

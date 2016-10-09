@@ -16,7 +16,7 @@
 
 </div>
 
-<div class="alert alert-info" ng-hide="isPetAssigned()">
+<div class="alert alert-info" ng-show="isPetAssigned()">
     You haven't chosen a pet to play with. You should do that now.
 </div>
 
@@ -40,7 +40,7 @@
                 <div class="media" ng-hide="pet._id == currentUser.active_pet" ng-repeat="pet in pets">
                     <div class="media-left">
                         <button ng-click="setActivePet(pet._id)" class='btn btn-xs btn-link visible-sm'>Choose {{pet.name}}</button>
-                        <img ng-src="pets/{{pet.image}}" class="media-object pet pet-thumbnail">
+                        <img ng-src="pets/{{pet.image}}" class="media-object pet pet-thumbnail cursor-pointer" ng-click="setActivePet(pet._id)">
                     </div>
                     <div class="media-body hidden-sm">
                         <!--<h4 class="media-heading">{{pet.name}}</h4>-->

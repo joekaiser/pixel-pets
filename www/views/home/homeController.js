@@ -19,14 +19,19 @@ angular.module('pixelPets').controller('homeController', ['$log', '$rootScope', 
             PetService.hatchEgg(id, Session.data().id)
                 .then(function(res) {
                     getEggs();
-                    getPets();
+                    $scope.reloadUserPets();
                 }).catch(function(err) {
                     $log.error(err);
                 })
         };
 
         $scope.isPetAssigned = function() {
-            return (check.assigned($scope.pets) && $scope.pets.length > 0 && check.assigned(Session.data().active_pet));
+            if (!check.assigned($scope.pets)) {
+                return true; //shortcutting this out because we don't show the message if there are no pets
+            }
+
+
+            return !($scope.pets.length > 0 && check.assigned(Session.data().active_pet));
         };
 
         $scope.setActivePet = function(petId) {
