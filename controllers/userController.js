@@ -62,7 +62,7 @@ exports.login = function(req, res, next) {
                                 roles: user.roles,
                                 id: user._id,
                                 token: newToken,
-                                active_pet: user.active_pet
+                                active_pet: user.active_pet_id
                             });
                         }
                     });

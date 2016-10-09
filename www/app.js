@@ -122,22 +122,18 @@ angular.module('pixelPets', ['ui.router', 'ngNotificationsBar', 'ngSanitize', 'a
 
         $scope.activePet = function() {
             return _.find($scope.pets, function(p) {
-                return p._id == $scope.currentUser.active_pet;
+                return p._id == Session.data().active_pet;
             });
         }
 
-        $scope.currentUser = null;
+        $scope.currentUser = function() {
+            return Session.data();
+        }
         $scope.isAuthorized = AuthService.isAuthorized;
-
-        $scope.setCurrentUser = function(user) {
-            $scope.currentUser = user;
-            $log.info('setting logged in user to:');
-            $log.info(user);
-        };
 
         $scope.logout = function() {
             AuthService.logout();
-            $scope.currentUser = null;
+            // $scope.currentUser = null;
             $state.transitionTo('main');
         };
 

@@ -3,7 +3,7 @@
         <div class="col col-sm-3 col-md-2">
             <div ng-if="currentUser">
 
-                <h4>Welcome, {{currentUser.username}}<small><a ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></a></small></h4>
+                <h4>Welcome, {{currentUser().username}}<small><a ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></a></small></h4>
                 </ul>
             </div>
             <pp-nav></pp-nav>

@@ -24,5 +24,12 @@ angular.module('pixelPets').factory('PetService', ['$http', function($http) {
         });
     };
 
+    service.setActive = function(petId, uid) {
+        return $http.post('/pets/setActive', {
+            "petId": petId,
+            "userId": uid
+        });
+    }
+
     return service;
 }]);

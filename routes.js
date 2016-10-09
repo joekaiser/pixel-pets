@@ -21,6 +21,7 @@ module.exports = function(app) {
     app.get('/pets/usereggs', AuthController.isAuthenticated, PetController.getUsersEggs);
     app.post('/pets/hatch', AuthController.isAuthenticated, PetController.hatchEgg);
     app.post('/pets/giveegg', AuthController.isAuthenticated, PetController.giveEgg);
+    app.post('/pets/setActive', AuthController.isAuthenticated, PetController.setActive);
 
     App.app.use(function(err, req, res, next) {
         res.status(500).json({

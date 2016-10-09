@@ -26,11 +26,18 @@ angular.module('pixelPets').controller('homeController', ['$log', '$rootScope', 
         };
 
         $scope.isPetAssigned = function() {
-            return (check.assigned($scope.pets) && $scope.pets.length > 0 && check.assigned($scope.currentUser.active_pet));
+            return (check.assigned($scope.pets) && $scope.pets.length > 0 && check.assigned(Session.data().active_pet));
         };
 
         $scope.setActivePet = function(petId) {
-            $scope.currentUser.active_pet = petId;
+            Session.data().active_pet = petId;
+
+
+            PetService.setActive(petId, Session.data().id)
+                .then(function(res) {
+                    Session.save();
+                })
+                .catch($log.error);
         };
 
 

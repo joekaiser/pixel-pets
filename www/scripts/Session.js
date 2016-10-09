@@ -9,11 +9,15 @@ angular.module('pixelPets').service('Session', function() {
         return check.assigned(data);
     }
 
+    this.save = function() {
+        lscache.set('session', data);
+    };
+
 
     this.create = function(user) {
         data = user;
 
-        lscache.set('session', data);
+        this.save();
 
     };
     this.destroy = function() {

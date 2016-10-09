@@ -8,7 +8,7 @@ angular.module('pixelPets').controller('loginController', ['$rootScope', '$scope
 
             if (Session.loadFromCache()) {
                 $http.defaults.headers.common['Authorization'] = 'bearer ' + Session.data().token;
-                $scope.setCurrentUser(Session.data());
+                //   $scope.setCurrentUser(Session.data());
                 $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                 $state.transitionTo('app.house');
             }

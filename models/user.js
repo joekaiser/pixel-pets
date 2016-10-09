@@ -42,6 +42,10 @@ var UserSchema = new mongoose.Schema({
             var utcNow = moment.utc();
             return utcNow.add(4, 'hours');
         }
+    },
+    active_pet_id: {
+        type: String,
+        required: false
     }
 
 });

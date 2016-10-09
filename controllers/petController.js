@@ -3,6 +3,7 @@ var auth = App.require('modules/auth.js');
 var ErrorHandler = App.require('errorHandler.js');
 var random = require("random-js")();
 var moment = require('moment');
+var User = App.require('models/user.js');
 
 
 
@@ -90,4 +91,30 @@ exports.giveEgg = function(req, res, next) {
         .catch(function(err) {
             return ErrorHandler.logAndSend(err, "could not give that user an egg", next);
         })
-}
+};
+
+exports.setActive = function(req, res, next) {
+    var userId = req.body.userId;
+    var petId = req.body.petId;
+
+    Pet.findOne({ ownerId: userId, _id: petId })
+        .then(function(pet) {
+            if (pet === undefined) {
+                var m = {};
+                m.userId = userId;
+                m.petId = petId;
+                m.message = "pet of the given ID does not belong to the user";
+
+                return ErrorHandler.logAndSend(m, "pet not found", next);
+            }
+
+            User.findOneAndUpdate({ _id: userId }, { $set: { active_pet_id: pet._id } })
+                .then(function() {
+                    res.send("success");
+                })
+        })
+
+    .catch(function(err) {
+        return ErrorHandler.logAndSend(err, "failed to set the active pet", next);
+    });
+};
